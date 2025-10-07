@@ -7,24 +7,29 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:myapp/bmi_controller.dart';
 
 import 'package:myapp/main.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+ testWidgets('Test logic of insert data page', (WidgetTester tester) async {
+   await tester.pumpWidget(ChangeNotifierProvider(
+     create: (context) => BMIController(),
+     child: const MyApp(),
+   ));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+   expect(find.text("Please, enter the weight!"), findsNothing);
+   await tester.tap(find.byType(ElevatedButton));
+   await tester.pump();
+   expect(find.text("Please, enter the weight!"), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+   await tester.enterText(find.byType(TextFormField).first, "55.0");
+   await tester.enterText(find.byType(TextFormField).last, "1.79");
+   await tester.tap(find.byType(ElevatedButton));
+   await tester.pumpAndSettle();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+   expect(find.byType(ElevatedButton), findsNothing);
+ });
 }
+

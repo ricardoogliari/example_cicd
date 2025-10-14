@@ -3,8 +3,12 @@ import 'package:myapp/bmi_controller.dart';
 import 'package:myapp/pages/insert_data.dart';
 import 'package:myapp/pages/result_bmi.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     ChangeNotifierProvider(
       create: (context) => BMIController(),

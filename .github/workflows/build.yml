@@ -42,3 +42,19 @@ jobs:
       # Runs unit test
       - name: Run tests
         run: flutter test
+
+      - name: Build Flutter Web
+        run: flutter build web --release
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Deploy to Firebase Hosting
+        run: firebase deploy --only hosting --project <firebase-project-id>
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

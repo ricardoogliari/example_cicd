@@ -11,7 +11,7 @@ void main() {
 
   group("Test start and all levels of bmi logic", () {
     test("value should start at 0", () {
-      expect(controller.bmi, results[1]);
+      expect(controller.bmi, results[0]);
     });
 
     test("value should be bmi level 1", () {
